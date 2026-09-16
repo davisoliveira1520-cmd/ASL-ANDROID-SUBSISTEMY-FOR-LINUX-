@@ -4,20 +4,41 @@
 
 | Recurso | ARM64 (celular) | x86_64 (PC/tablet Android, emulador) |
 |---|---|---|
-| Arch Linux via proot | ✅ OK | ✅ OK |
-| Steam | 🧪 lento (box64, títulos leves) | ✅ OK (multilib) |
+| Arch/Ubuntu/Debian/Fedora/Alpine via proot | ✅ OK | ✅ OK |
+| Steam | 🧪 lento (box64, títulos leves) | ✅ OK |
 | Jogos triplo-A | ❌ não | 🧪 depende de GPU/KVM |
 | macOS (docker-osx) | ❌ sem KVM | ✅ se tiver /dev/kvm |
+
+## Distros suportadas
+
+Todas rodam tanto em ARM64 quanto em x86_64 (o `proot-distro` baixa o rootfs
+da arquitetura correta automaticamente).
+
+| Nome | Base | Pacotes |
+|---|---|---|
+| `archlinux` / `manjaro` | Arch | `pacman` |
+| `ubuntu` / `debian` | Debian | `apt` |
+| `fedora` / `rocky` / `alma` | Red Hat | `dnf` |
+| `opensuse` | SUSE | `zypper` |
+| `alpine` | Alpine | `apk` |
+| `void` | Void | `xbps` |
+| `bazzite` | Fedora + jogos | `dnf` (+ RPM Fusion) |
+
+> **Sobre o `bazzite`:** é um perfil de jogos, não o Bazzite oficial. O Bazzite
+> real é uma imagem imutável (Fedora Atomic / OCI) distribuída em `.iso` e
+> container; ele **não** é uma distro instalável pelo `proot-distro`. O perfil
+> ASLM instala Fedora + Steam/Lutris/GameMode/MangoHud para dar a mesma
+> experiência de jogos dentro do proot.
 
 ## Perguntas frequentes
 
 ### Preciso de root?
-Não para Arch/Steam (proot). Para `/dev/kvm` (macOS) **sim**, em geral.
+Não para Linux/Steam (proot). Para `/dev/kvm` (macOS) **sim**, em geral.
 
 ### Linux já não é o Android?
 O Android usa um kernel Linux, mas não traz um *userspace* GNU completo.
-O ASLM adiciona Arch com repositórios oficiais (`archlinux/linux`,
-`pacman`), programação, jogos etc.
+O ASLM adiciona distros completas (Arch, Ubuntu, Debian, Fedora...) com seus
+repositórios oficiais, gerenciadores de pacotes e ferramentas de jogos.
 
 ### Posso rodar o WhatsApp/Instagram no Linux?
 Não é o objetivo. Rodar apps Android de novo num Linux hosts exige
@@ -26,7 +47,7 @@ Waydroid/Anbox, que não fazem parte do ASLM (mas podem viver ao lado).
 ### Vai assumir o boot do aparelho? (dual boot)
 Não. Nada é gravado na partição de boot, não há dual boot, não há risco de
 "brickar". Tudo vive em diretórios do Termux. Para remover: exclua o app
-(ou `proot-distro remove archlinux`).
+(ou `bash scripts/setup-distro.sh remove archlinux`).
 
 ## Limitações conhecidas
 

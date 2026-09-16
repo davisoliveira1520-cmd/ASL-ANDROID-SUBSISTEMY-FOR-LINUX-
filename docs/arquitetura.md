@@ -6,7 +6,7 @@ O ASLM organiza três camadas por cima do Android, sem dual boot e sem substitui
 ┌────────────────────────────────────────────────────────────┐
 │  APPs Android (Termux, launcher, etc.)                    │
 ├────────────────────────────────────────────────────────────┤
-│  🐧 Camada Linux (proot-distro → Arch Linux)              │
+│  🐧 Camada Linux (proot-distro → Arch/Ubuntu/Debian/Fedora/...)      │
 │     ├─ Steam / Lutris / GameMode  (camada estilo Bazzite)  │
 │     └─ toolchain, pacotes, shells                          │
 ├────────────────────────────────────────────────────────────┤
@@ -24,10 +24,12 @@ O ASLM organiza três camadas por cima do Android, sem dual boot e sem substitui
 No WSL, o Windows hospeda um Linux userspace. No ASLM é o inverso: o
 **Android hospeda um Linux userspace (Arch)** via `proot`.
 
-- `proot-distro` baixa o rootfs de uma distribuição (Arch) da internet.
+- `proot-distro` baixa o rootfs de uma distribuição (Arch, Ubuntu, Debian,
+  Fedora, Alpine, ...) da internet.
 - Usa `proot` para traduzir chamadas de sistema (sem root — funciona em
   celulares não-roteados).
 - O filesystem fica em `~/.local/share/proot-distro/installed-rootfs/`.
+- Cada distro é independente: você pode ter Arch + Ubuntu + Fedora lado a lado.
 
 ## Camada de jogos (estilo Bazzite)
 
@@ -52,7 +54,7 @@ de um container Docker usando **KVM** (virtualização por hardware).
 ## Fluxo de instalação
 
 ```
-bootstrap.sh ──► setup-arch.sh     (Arch no proot)
-              └► setup-steam.sh    (X11 + Steam + box64)
+bootstrap.sh ──► setup-distro.sh   (Arch/Ubuntu/Debian/Fedora/... no proot)
+              └► setup-steam.sh    (X11 + Steam + box64; por distro)
               └► setup-macos.sh    (docker-osx / só x86_64+KVM)
 ```

@@ -4,8 +4,8 @@
 
 **Rode GNU/Linux e (experimental) macOS por cima do Android, sem dual boot.**
 
-Roda o kernel **Linux (Arch)** e distribuições **GNU/Linux** em espaço de usuário sobre o Android usando [Termux](https://github.com/termux/termux-app) + [`proot-distro`](https://github.com/termux/proot-distro).
-Inclui camada de jogos inspirada no [Bazzite](https://github.com/ublue-os/bazzite) para **Steam**, e um runner **experimental x86_64** para macOS via [docker-osx](https://github.com/sickcodes/docker-osx).
+Roda **Arch Linux, Ubuntu, Debian, Fedora, Alpine** e outras distribuições **GNU/Linux** em espaço de usuário sobre o Android usando [Termux](https://github.com/termux/termux-app) + [`proot-distro`](https://github.com/termux/proot-distro).
+Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/bazzite) para **Steam**, e um runner **experimental x86_64** para macOS via [docker-osx](https://github.com/sickcodes/docker-osx).
 
 </div>
 
@@ -23,11 +23,28 @@ Inclui camada de jogos inspirada no [Bazzite](https://github.com/ublue-os/bazzit
 
 | Camada | O que é | Status |
 |---|---|---|
-| 🐧 **Android Subsystem for Linux** | Arch Linux (e outras distros) rodando em userspace sobre Termux via `proot-distro` | ✅ Estável |
-| 🎮 **Steam + Bazzite-like** | Ambiente de jogos (Steam, Lutris, GameMode) dentro do Linux proot, estilo Bazzite | 🧪 Experimental (ARM64) / ✅ x86_64 |
+| 🐧 **Android Subsystem for Linux** | Arch, Ubuntu, Debian, Fedora, Alpine e outras via `proot-distro`, sem root | ✅ Estável |
+| 🎮 **Steam + Bazzite-like** | Ambiente de jogos (Steam, Lutris, GameMode, MangoHud) no Linux proot | 🧪 Experimental (ARM64) / ✅ x86_64 |
 | 🍎 **macOS runner** | Instância de macOS via Docker/KVM (docker-osx) | ⚠️ Só x86_64 + KVM |
 
 Sem dual boot: **tudo roda dentro do Android**, no mesmo aparelho, coexistindo com seus apps.
+
+### 🐧 Distros suportadas
+
+| Nome ASLM | Base | Gerenciador de pacotes |
+|---|---|---|
+| `archlinux` (padrão) | Arch Linux | `pacman` |
+| `manjaro` | Manjaro | `pacman` |
+| `ubuntu` | Ubuntu | `apt` |
+| `debian` | Debian | `apt` |
+| `fedora` | Fedora | `dnf` |
+| `rocky` / `alma` | RHEL-compatible | `dnf` |
+| `opensuse` | openSUSE Tumbleweed | `zypper` |
+| `alpine` | Alpine Linux | `apk` |
+| `void` | Void Linux | `xbps` |
+| `bazzite` | Fedora + stack de jogos | `dnf` + RPM Fusion |
+
+> **`bazzite`** é um **perfil gamer** (Fedora + Steam/Lutris/GameMode/MangoHud), não o sistema imutável do Bazzite. O Bazzite real é uma imagem OCI/Fedora Atomic e não roda via `proot-distro`.
 
 ---
 
@@ -49,16 +66,21 @@ No Termux:
 pkg update && pkg upgrade -y
 pkg install -y proot-distro
 
-# 2. Rode o bootstrap do ASLM
+# 2. Rode o bootstrap do ASLM (instala o Arch Linux por padrão)
 curl -fsSL https://raw.githubusercontent.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-/main/scripts/bootstrap.sh | bash
+
+# ou escolha outra distro:
+# curl -fsSL .../bootstrap.sh | bash -s -- ubuntu
+# curl -fsSL .../bootstrap.sh | bash -s -- bazzite
 ```
 
 Ou clone direto (requer `git` no Termux):
 
 ```sh
 git clone https://github.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-.git
-cd ASLM
-bash scripts/bootstrap.sh
+cd ASL-ANDROID-SUBSISTEMY-FOR-LINUX-
+bash scripts/bootstrap.sh          # Arch (padrão)
+bash scripts/bootstrap.sh ubuntu   # ou outra distro
 ```
 
 ---
@@ -66,13 +88,22 @@ bash scripts/bootstrap.sh
 ## 📚 Uso
 
 ```sh
-# Entrar no Linux (Arch) por cima do Android
-aslm               # alias: proot-distro login archlinux
+# Gerenciar distros
+bash scripts/setup-distro.sh list            # lista distros suportadas
+bash scripts/setup-distro.sh install ubuntu  # instala Ubuntu
+bash scripts/setup-distro.sh install bazzite # perfil gamer (Fedora + jogos)
+bash scripts/setup-distro.sh shell ubuntu    # abre o shell
 
-# Rodar o Steam (camada estilo Bazzite)
-aslm steam &
+# Atalho único (criado pelo bootstrap) — usa a distro padrão
+aslm                       # entra na distro padrão (Arch)
+aslm ubuntu                # entra no Ubuntu
+aslm -- neofetch           # roda um comando dentro da distro
 
-# Iniciar o runner do macOS (só x86_64 + KVM)
+# Camada de jogos estilo Bazzite
+bash scripts/setup-steam.sh setup archlinux
+bash scripts/setup-steam.sh start archlinux
+
+# Runner do macOS (só x86_64 + KVM)
 bash scripts/setup-macos.sh run
 ```
 

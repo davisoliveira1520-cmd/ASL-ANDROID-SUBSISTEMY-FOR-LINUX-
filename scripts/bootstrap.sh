@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 #
 # ASLM — bootstrap
-# Prepara o Android (via Termux) para rodar GNU/Linux.
+# Prepara o Android (via Termux) para rodar GNU/Linux e instala uma distro.
 #
 # Uso:
-#   bash scripts/bootstrap.sh
+#   bash scripts/bootstrap.sh                # instala o Arch Linux (padrao)
+#   bash scripts/bootstrap.sh ubuntu         # instala Ubuntu
+#   bash scripts/bootstrap.sh bazzite        # perfil gamer (Fedora + jogos)
 set -euo pipefail
 
-ASLM_GREEN='\033[1;32m'
-ASLM_RED='\033[1;31m'
-ASLM_NC='\033[0m'
-
+ASLM_GREEN='\033[1;32m'; ASLM_YEL='\033[1;33m'; ASLM_RED='\033[1;31m'; ASLM_NC='\033[0m'
 say()  { echo -e "${ASLM_GREEN}[ASLM]${ASLM_NC} $*"; }
+warn() { echo -e "${ASLM_YEL}[ASLM] aviso:${ASLM_NC} $*"; }
 fail() { echo -e "${ASLM_RED}[ASLM] ERRO:${ASLM_NC} $*"; exit 1; }
+
+DISTRO="${1:-archlinux}"
 
 # --- Sanidade ----------------------------------------------------------------
 command -v pkg >/dev/null 2>&1 || fail "execute isto dentro do Termux (pkg nao encontrado)."
@@ -22,26 +24,28 @@ command -v proot-distro >/dev/null 2>&1 || {
   pkg install -y proot-distro
 }
 
-# --- Instala a distro Arch Linux ----------------------------------------------
-if ! proot-distro list | grep -q archlinux; then
-  say "Instalando Arch Linux (arquivos baixados do repositório archlinux/linux)..."
-  proot-distro install archlinux || fail "falha ao instalar a distro archlinux."
-fi
+# --- Instala a distro escolhida via setup-distro.sh --------------------------
+ASLM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+say "ASLM: instalando distro '${DISTRO}'..."
+bash "${ASLM_DIR}/setup-distro.sh" install "${DISTRO}"
 
-say "Sincronizando pacotes dentro do Arch (pacman -Syu)..."
-proot-distro login archlinux -- pacman -Syu --noconfirm || fail "falha no pacman -Syu."
-
-# --- Atalho para o dia a dia ----------------------------------------------------
+# --- Atalho unico para o dia a dia -------------------------------------------
 setup_alias() {
   local rc="${HOME}/.bashrc"
-  if [ -f "${rc}" ] && ! grep -q '^alias aslm=' "${rc}"; then
-    printf '\nalias aslm="proot-distro login archlinux"\n' >> "${rc}"
-    say 'Criado o atalho `aslm` em ~/.bashrc'
+  if [ -f "${rc}" ] && ! grep -q '^aslm()' "${rc}"; then
+    {
+      echo ''
+      echo 'aslm() { proot-distro login "${1:-'"${DISTRO}"'}" "${@:2}"; }'
+    } >> "${rc}"
+    say "Criada a funcao 'aslm' em ~/.bashrc (usa ${DISTRO} por padrao)."
   else
-    say 'Atalho `aslm` já presente (ou sem .bashrc).'
+    say "Funcao 'aslm' ja presente (ou sem .bashrc)."
   fi
 }
 setup_alias
 
-say "Pronto! Use: proot-distro login archlinux  (ou o atalho: aslm)"
-say "Exemplos: aslm -- pacman -S neofetch && aslm -- neofetch"
+say "Tudo pronto!"
+say "  aslm                 # entra em ${DISTRO}"
+say "  aslm ubuntu          # entra no Ubuntu (se instalado)"
+say "  aslm -- pacman -S neofetch"
+say "  bash scripts/setup-steam.sh setup   # camada de jogos (estilo Bazzite)"
