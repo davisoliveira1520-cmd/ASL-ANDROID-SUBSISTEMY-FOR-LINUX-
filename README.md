@@ -4,6 +4,8 @@
 
 **Rode GNU/Linux e (experimental) macOS por cima do Android, sem dual boot.**
 
+🇧🇷 **Português** · 🇺🇸 [English](README.en.md)
+
 Roda **Arch Linux, Ubuntu, Debian, Fedora, Alpine** e outras distribuições **GNU/Linux** em espaço de usuário sobre o Android usando [Termux](https://github.com/termux/termux-app) + [`proot-distro`](https://github.com/termux/proot-distro).
 Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/bazzite) para **Steam**, e um runner **experimental x86_64** para macOS via [docker-osx](https://github.com/sickcodes/docker-osx).
 
@@ -57,31 +59,40 @@ Sem dual boot: **tudo roda dentro do Android**, no mesmo aparelho, coexistindo c
 
 ---
 
-## 🚀 Instalação rápida
+## 🚀 Baixar e instalar o ASLM (via Termux)
 
-No Termux:
+O ASLM é **baixado e executado dentro do [Termux](https://f-droid.org/packages/com.termux/)** — o terminal Linux que roda no propio Android. Tudo acontece no celular: **sem root e sem dual boot**.
+
+### 1. Instale o Termux
+
+Baixe o Termux pela **F-Droid** (não use a versão da Play Store, que está desatualizada):
+
+👉 https://f-droid.org/packages/com.termux/
+
+### 2. Baixe o ASLM dentro do Termux
+
+Abra o Termux e rode:
 
 ```sh
-# 1. Atualize e instale o proot-distro
 pkg update && pkg upgrade -y
-pkg install -y proot-distro
-
-# 2. Rode o bootstrap do ASLM (instala o Arch Linux por padrão)
-curl -fsSL https://raw.githubusercontent.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-/main/scripts/bootstrap.sh | bash
-
-# ou escolha outra distro:
-# curl -fsSL .../bootstrap.sh | bash -s -- ubuntu
-# curl -fsSL .../bootstrap.sh | bash -s -- bazzite
-```
-
-Ou clone direto (requer `git` no Termux):
-
-```sh
+pkg install -y git proot-distro
 git clone https://github.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-.git
 cd ASL-ANDROID-SUBSISTEMY-FOR-LINUX-
-bash scripts/bootstrap.sh          # Arch (padrão)
-bash scripts/bootstrap.sh ubuntu   # ou outra distro
 ```
+
+### 3. Rode o instalador
+
+```sh
+bash scripts/bootstrap.sh            # Arch Linux (padrão)
+bash scripts/bootstrap.sh ubuntu     # ou escolha outra distro
+bash scripts/bootstrap.sh bazzite    # perfil gamer (Fedora + jogos)
+```
+
+> **Prefere um comando só (sem clonar)?** Baixe e rode direto no Termux:
+> ```sh
+> curl -fsSL https://raw.githubusercontent.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-/main/scripts/bootstrap.sh | bash -s -- ubuntu
+> ```
+> (troque `ubuntu` por `archlinux`, `debian`, `fedora`, `bazzite`, etc.)
 
 ---
 
