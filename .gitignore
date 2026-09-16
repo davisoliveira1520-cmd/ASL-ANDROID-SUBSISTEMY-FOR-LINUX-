@@ -1,0 +1,20 @@
+# Logs / cache
+*.log
+.DS_Store
+Thumbs.db
+
+# Termux / proot data (nada disso vai pro repo)
+installed-rootfs/
+termux-*
+.termux/
+
+# VSCode / IDE
+.idea/
+.vscode/
+*.swp
+
+# Não commitar credenciais
+.env
+*.key
+*.pem
+secrets.*
