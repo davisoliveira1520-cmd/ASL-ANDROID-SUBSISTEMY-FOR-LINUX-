@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="480" viewBox="0 0 1000 480" role="img" aria-label="ASLM terminal demo">
+  <defs>
+    <linearGradient id="tbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#010409"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="480" rx="14" fill="url(#tbg)"/>
+  <rect x="1" y="1" width="998" height="478" rx="13" fill="none" stroke="#30363d"/>
+
+  <rect x="1" y="1" width="998" height="40" rx="13" fill="#161b22"/>
+  <rect x="1" y="30" width="998" height="11" fill="#161b22"/>
+  <circle cx="26" cy="21" r="6" fill="#ff5f56"/>
+  <circle cx="48" cy="21" r="6" fill="#ffbd2e"/>
+  <circle cx="70" cy="21" r="6" fill="#27c93f"/>
+  <text x="500" y="26" text-anchor="middle" font-family="ui-monospace, Consolas, monospace"
+        font-size="13" fill="#8b949e">Termux — ASLM</text>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">
+    <text x="24" y="72" fill="#56d364">~ $</text>
+    <text x="70" y="72" fill="#c9d1d9">pkg install -y git proot-distro</text>
+
+    <text x="24" y="104" fill="#56d364">~ $</text>
+    <text x="70" y="104" fill="#c9d1d9">git clone https://github.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-.git</text>
+
+    <text x="24" y="136" fill="#56d364">~ $</text>
+    <text x="70" y="136" fill="#c9d1d9">cd ASL-ANDROID-SUBSISTEMY-FOR-LINUX-</text>
+
+    <text x="24" y="168" fill="#56d364">~ $</text>
+    <text x="70" y="168" fill="#c9d1d9">bash scripts/bootstrap.sh ubuntu</text>
+
+    <text x="24" y="200" fill="#3fb950">[ASLM]</text>
+    <text x="90" y="200" fill="#8b949e">Instalando ubuntu via proot-distro (baixando rootfs)...</text>
+
+    <text x="24" y="228" fill="#3fb950">[ASLM]</text>
+    <text x="90" y="228" fill="#8b949e">Sincronizando pacotes de ubuntu...</text>
+
+    <text x="24" y="256" fill="#3fb950">[ASLM]</text>
+    <text x="90" y="256" fill="#8b949e">Tudo pronto! Abra com: bash scripts/setup-distro.sh shell ubuntu</text>
+
+    <text x="24" y="292" fill="#56d364">~ $</text>
+    <text x="70" y="292" fill="#c9d1d9">aslm ubuntu</text>
+
+    <text x="24" y="324" fill="#79c0ff">root@localhost:~#</text>
+    <text x="188" y="324" fill="#c9d1d9">uname -m</text>
+    <text x="24" y="350" fill="#c9d1d9">aarch64</text>
+
+    <text x="24" y="382" fill="#79c0ff">root@localhost:~#</text>
+    <text x="188" y="382" fill="#c9d1d9">head -1 /etc/os-release</text>
+    <text x="24" y="408" fill="#c9d1d9">PRETTY_NAME="Ubuntu"</text>
+
+    <text x="24" y="444" fill="#56d364">~ $</text>
+    <text x="70" y="444" fill="#8b949e"># GNU/Linux rodando DENTRO do Android — sem dual boot, sem root</text>
+  </g>
+</svg>

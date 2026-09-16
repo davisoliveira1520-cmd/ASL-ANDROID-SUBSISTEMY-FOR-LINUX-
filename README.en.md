@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/banner.svg" alt="ASLM — Android Subsystem for Linux and Mac OS" width="100%">
+
 # ASLM — Android Subsystem for Linux and Mac OS
 
 **Run GNU/Linux and (experimental) macOS on top of Android, with no dual boot.**
@@ -10,6 +12,11 @@ Runs **Arch Linux, Ubuntu, Debian, Fedora, Alpine** and other **GNU/Linux** dist
 Includes a gaming profile inspired by [Bazzite](https://github.com/ublue-os/bazzite) for **Steam**, plus an **experimental x86_64** runner for macOS via [docker-osx](https://github.com/sickcodes/docker-osx).
 
 </div>
+
+---
+
+> [!IMPORTANT]
+> **This is NOT dual boot.** ASLM does **not touch the boot partition** and does **not replace Android**. It just **installs GNU/Linux distributions on top of Android**, inside Termux, alongside your normal apps. Nothing is written outside Termux folders — to remove it, just delete the distro or the app.
 
 ---
 
@@ -47,6 +54,24 @@ No dual boot: **everything runs inside Android**, on the same device, alongside 
 | `bazzite` | Fedora + gaming stack | `dnf` + RPM Fusion |
 
 > **`bazzite`** is a **gaming profile** (Fedora + Steam/Lutris/GameMode/MangoHud), not the immutable Bazzite system. Real Bazzite is an OCI/Fedora Atomic image and does not run via `proot-distro`.
+
+---
+
+## 🖥️ Demo
+
+Installing Ubuntu on top of Android via Termux — notice it is just Termux running, **no dual boot at all**:
+
+<img src="assets/terminal-demo.svg" alt="ASLM demo in Termux installing Ubuntu on top of Android" width="100%">
+
+---
+
+## 🚫 No dual boot (how it works)
+
+- ASLM runs **100% inside Android**, as an app (Termux).
+- It does **not** touch the bootloader, create a partition, or reboot the device.
+- Android stays intact and your apps keep working as usual.
+- Linux and Android run **at the same time** — you switch by switching apps.
+- To uninstall: `bash scripts/setup-distro.sh remove <distro>` or remove Termux.
 
 ---
 
