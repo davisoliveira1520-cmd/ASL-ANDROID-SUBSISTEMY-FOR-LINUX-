@@ -50,13 +50,13 @@ pkg update && pkg upgrade -y
 pkg install -y proot-distro
 
 # 2. Rode o bootstrap do ASLM
-curl -fsSL https://raw.githubusercontent.com/davisoliveira1520-cmd/ASLM/main/scripts/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-/main/scripts/bootstrap.sh | bash
 ```
 
 Ou clone direto (requer `git` no Termux):
 
 ```sh
-git clone https://github.com/davisoliveira1520-cmd/ASLM.git
+git clone https://github.com/davisoliveira1520-cmd/ASL-ANDROID-SUBSISTEMY-FOR-LINUX-.git
 cd ASLM
 bash scripts/bootstrap.sh
 ```
