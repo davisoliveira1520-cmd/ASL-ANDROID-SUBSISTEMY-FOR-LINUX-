@@ -1,15 +1,15 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="ASLM — Android Subsystem for Linux and Mac OS" width="100%">
+<img src="assets/banner.svg" alt="ASLM — Android Subsystem for Linux" width="100%">
 
-# ASLM — Android Subsystem for Linux and Mac OS
+# ASLM — Android Subsystem for Linux
 
-**The WSL of Android** — run GNU/Linux and (experimental) macOS on top of Android, with no dual boot.
+**The WSL of Android** — run GNU/Linux on top of Android, no root and no dual boot.
 
 🇧🇷 [Português](README.md) · 🇺🇸 **English**
 
 Runs **Arch Linux, Ubuntu, Debian, Fedora, Alpine** and other **GNU/Linux** distributions in user space on top of Android using [Termux](https://github.com/termux/termux-app) + [`proot-distro`](https://github.com/termux/proot-distro).
-Includes a gaming profile inspired by [Bazzite](https://github.com/ublue-os/bazzite) for **Steam**, plus an **experimental x86_64** runner for macOS via [docker-osx](https://github.com/sickcodes/docker-osx).
+Includes a gaming profile inspired by [Bazzite](https://github.com/ublue-os/bazzite) for **Steam** — all with no root and no dual boot.
 
 </div>
 
@@ -23,7 +23,6 @@ Includes a gaming profile inspired by [Bazzite](https://github.com/ublue-os/bazz
 ## ⚠️ Honest disclaimer (read first)
 
 - **Android is already Linux.** The Android kernel is a fork of Linux. ASLM does not replace the kernel — it is the **WSL for Android**: just as WSL gives Windows a full Linux subsystem, ASLM gives Android a full Linux subsystem (GNU user space on top of Android, not on Windows).
-- **macOS on Android is EXPERIMENTAL and x86_64 + KVM only.** [docker-osx](https://github.com/sickcodes/docker-osx) needs hardware virtualization (KVM) and the x86_64 architecture. Most phones are ARM64, so **macOS does not work on that majority** — only on x86_64 Android tablets/PCs or emulators with KVM. `setup-macos.sh` detects and warns if your device is unsupported.
 - **Steam on ARM64 is slow/experimental.** Native games will not run well. ASLM sets up the environment (box64 + X11 + Vulkan-Lavapipe) so you can try lighter titles.
 
 ---
@@ -34,7 +33,6 @@ Includes a gaming profile inspired by [Bazzite](https://github.com/ublue-os/bazz
 |---|---|---|
 | 🐧 **Android Subsystem for Linux** | Arch, Ubuntu, Debian, Fedora, Alpine and more via `proot-distro`, no root | ✅ Stable |
 | 🎮 **Steam + Bazzite-like** | Gaming environment (Steam, Lutris, GameMode, MangoHud) inside the proot Linux | 🧪 Experimental (ARM64) / ✅ x86_64 |
-| 🍎 **macOS runner** | macOS instance via Docker/KVM (docker-osx) | ⚠️ x86_64 + KVM only |
 
 No dual boot: **everything runs inside Android**, on the same device, alongside your apps.
 
@@ -93,7 +91,6 @@ Installing Ubuntu on top of Android via Termux — notice it is just Termux runn
 - Android **8.0 (Oreo)+** (10+ recommended)
 - [Termux](https://f-droid.org/packages/com.termux/) (install from F-Droid, not the Play Store — the Play Store version is outdated)
 - ~4–8 GB of free storage (base Arch ~1 GB; Steam + games much more)
-- For **macOS**: an **x86_64** device with `/dev/kvm` (ARM64 phones do **not** support it)
 
 ---
 
@@ -157,9 +154,6 @@ aslm --version
 # Bazzite-style gaming layer
 bash scripts/setup-steam.sh setup archlinux
 bash scripts/setup-steam.sh start archlinux
-
-# macOS runner (x86_64 + KVM only)
-bash scripts/setup-macos.sh run
 ```
 
 More details:
@@ -176,11 +170,10 @@ This project is an orchestration/documentation layer over third-party code:
 
 - 🐧 **Arch Linux kernel**: [`archlinux/linux`](https://github.com/archlinux/linux)
 - 📦 **proot-distro**: [`termux/proot-distro`](https://github.com/termux/proot-distro)
-- 🍎 **macOS ISO / docker-osx**: [`sickcodes/docker-osx`](https://github.com/sickcodes/docker-osx)
 - 🎮 **Steam / gaming-style**: [`ublue-os/bazzite`](https://github.com/ublue-os/bazzite)
 - 🐆 **x86 on ARM emulation**: [`ptitSeb/box64`](https://github.com/ptitSeb/box64) and [`ptitSeb/box86`](https://github.com/ptitSeb/box86)
 
-> **Important:** respect each upstream project's license. macOS is proprietary Apple software — installing it on non-Apple hardware violates the EULA and is your responsibility.
+> **Important:** respect each upstream project's license.
 
 ---
 

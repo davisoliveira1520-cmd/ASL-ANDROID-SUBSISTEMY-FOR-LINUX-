@@ -1,8 +1,8 @@
 # Contribuindo com o ASLM
 
 Valeu pelo interesse! O ASLM é uma camada de orquestração sobre projetos
-upstream (archlinux/linux, termux/proot-distro, sickcodes/docker-osx,
-ublue-os/bazzite). Contribuições de scripts e documentação são bem-vindas.
+upstream (archlinux/linux, termux/proot-distro, ublue-os/bazzite).
+Contribuições de scripts e documentação são bem-vindas.
 
 ## Antes de abrir PR
 
@@ -17,8 +17,8 @@ ublue-os/bazzite). Contribuições de scripts e documentação são bem-vindas.
 
 - Prefixe mensagens com `[ASLM]`.
 - Nunca faça `git` commit de rootfs, cache do Termux ou dados pessoais.
-- Se seu script exigir x86_64 + KVM (macOS), verifique no início e aborte
-  com mensagem clara. Não prometa suporte inexistente.
+- O ASLM é **root-free por design** (igual ao WSL1). Não adicione scripts,
+  comandos ou instruções que exijam root ou modifiquem o sistema Android.
 
 ## Reportando bugs
 

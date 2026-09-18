@@ -1,15 +1,15 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="ASLM — Android Subsystem for Linux and Mac OS" width="100%">
+<img src="assets/banner.svg" alt="ASLM — Android Subsystem for Linux" width="100%">
 
-# ASLM — Android Subsystem for Linux and Mac OS
+# ASLM — Android Subsystem for Linux
 
-**O WSL do Android** — rode GNU/Linux e (experimental) macOS por cima do Android, sem dual boot.
+**O WSL do Android** — rode GNU/Linux por cima do Android, sem root e sem dual boot.
 
 🇧🇷 **Português** · 🇺🇸 [English](README.en.md)
 
 Roda **Arch Linux, Ubuntu, Debian, Fedora, Alpine** e outras distribuições **GNU/Linux** em espaço de usuário sobre o Android usando [Termux](https://github.com/termux/termux-app) + [`proot-distro`](https://github.com/termux/proot-distro).
-Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/bazzite) para **Steam**, e um runner **experimental x86_64** para macOS via [docker-osx](https://github.com/sickcodes/docker-osx).
+Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/bazzite) para **Steam** — tudo sem root e sem dual boot.
 
 </div>
 
@@ -23,7 +23,6 @@ Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/baz
 ## ⚠️ Aviso honesto (leia antes)
 
 - **Android já é Linux.** O kernel do Android é um fork do Linux. O ASLM **não substitui o kernel** — ele é o **WSL para Android**: assim como o WSL dá um subsistema Linux completo dentro do Windows, o ASLM dá um subsistema Linux completo dentro do Android (userspace GNU em cima do Android, não sobre Windows).
-- **macOS em Android é EXPERIMENTAL e só em x86_64 + KVM.** O [docker-osx](https://github.com/sickcodes/docker-osx) precisa de virtualização por hardware (KVM) e arquitetura x86_64. A maioria dos celulares é ARM64, então **macOS não funciona nessa maioria** — só em tablets/PCS Android x86_64, ou emuladores com KVM. O script `setup-macos.sh` detecta e avisa se seu aparelho não suporta.
 - **Steam em ARM64 é lento/experimental.** Jogos nativos não vão rodar bem. O ASLM prepara o ambiente (box64 + X11 + Vulkan-Lavapipe) e deixa você testar títulos leves.
 
 ---
@@ -34,7 +33,6 @@ Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/baz
 |---|---|---|
 | 🐧 **Android Subsystem for Linux** | Arch, Ubuntu, Debian, Fedora, Alpine e outras via `proot-distro`, sem root | ✅ Estável |
 | 🎮 **Steam + Bazzite-like** | Ambiente de jogos (Steam, Lutris, GameMode, MangoHud) no Linux proot | 🧪 Experimental (ARM64) / ✅ x86_64 |
-| 🍎 **macOS runner** | Instância de macOS via Docker/KVM (docker-osx) | ⚠️ Só x86_64 + KVM |
 
 Sem dual boot: **tudo roda dentro do Android**, no mesmo aparelho, coexistindo com seus apps.
 
@@ -93,7 +91,6 @@ Instalando o Ubuntu por cima do Android via Termux — repare que é só o Termu
 - Android **8.0 (Oreo)+** (recomendado 10+)
 - [Termux](https://f-droid.org/packages/com.termux/) (instale pela F-Droid, não pelo Play Store — a versão do Play está desatualizada)
 - ~4–8 GB de espaço livre (Arch base ~1 GB; Steam+games muito mais)
-- Para **macOS**: aparelho/dispositivo **x86_64** com `/dev/kvm` (celulares ARM64 **não** suportam)
 
 ---
 
@@ -157,9 +154,6 @@ aslm --version
 # Camada de jogos estilo Bazzite
 bash scripts/setup-steam.sh setup archlinux
 bash scripts/setup-steam.sh start archlinux
-
-# Runner do macOS (só x86_64 + KVM)
-bash scripts/setup-macos.sh run
 ```
 
 Veja os detalhes em:
@@ -176,11 +170,10 @@ Este projeto é uma camada de orquestração/documentação sobre código de ter
 
 - 🐧 **Kernel Arch Linux**: [`archlinux/linux`](https://github.com/archlinux/linux)
 - 📦 **proot-distro**: [`termux/proot-distro`](https://github.com/termux/proot-distro)
-- 🍎 **macOS ISO / docker-osx**: [`sickcodes/docker-osx`](https://github.com/sickcodes/docker-osx)
 - 🎮 **Steam / estilo de jogos**: [`ublue-os/bazzite`](https://github.com/ublue-os/bazzite)
 - 🐆 **Emulação x86 em ARM**: [`ptitSeb/box64`](https://github.com/ptitSeb/box64) e [`ptitSeb/box86`](https://github.com/ptitSeb/box86)
 
-> **Importante:** respeite as licenças de cada projeto upstream. macOS é software proprietário da Apple — a instalação em hardware não-Apple viola o EULA e é de sua responsabilidade.
+> **Importante:** respeite as licenças de cada projeto upstream.
 
 ---
 

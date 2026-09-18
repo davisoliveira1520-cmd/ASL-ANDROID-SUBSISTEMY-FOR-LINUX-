@@ -1,6 +1,6 @@
 # Arquitetura do ASLM
 
-O ASLM organiza três camadas por cima do Android, sem dual boot e sem substituir o kernel.
+O ASLM organiza camadas por cima do Android, sem root, sem dual boot e sem substituir o kernel.
 
 ```
 ┌────────────────────────────────────────────────────────────┐
@@ -9,9 +9,6 @@ O ASLM organiza três camadas por cima do Android, sem dual boot e sem substitui
 │  🐧 Camada Linux (proot-distro → Arch/Ubuntu/Debian/Fedora/...)      │
 │     ├─ Steam / Lutris / GameMode  (camada estilo Bazzite)  │
 │     └─ toolchain, pacotes, shells                          │
-├────────────────────────────────────────────────────────────┤
-│  🍎 Camada macOS (EXPERIMENTAL: x86_64 + KVM via docker)  │
-│     └─ docker-osx (sickcodes)                              │
 ├────────────────────────────────────────────────────────────┤
 │  Android OS  (IME, drivers, HAL, sepolicy)                 │
 ├────────────────────────────────────────────────────────────┤
@@ -56,20 +53,9 @@ de jogos "console-like". No ASLM isso vira uma stack dentro do Arch:
 - **termux-x11 + Xwayland**: janelas X11 no display :0 do Android.
 - **Steam, Lutris e GameMode** para organizar e rodar os jogos.
 
-## Camada macOS (docker-osx)
-
-O [docker-osx](https://github.com/sickcodes/docker-osx) roda macOS dentro
-de um container Docker usando **KVM** (virtualização por hardware).
-
-- Exige CPU **x86_64** e `/dev/kvm`.
-- Em Android puro (celular ARM64) **não há suporte**.
-- Funciona em: PCs/Liutos Android x86_64, Chromebooks com Linux, emuladores
-  com KVM, ou servidores físicos Linux.
-
 ## Fluxo de instalação
 
 ```
 bootstrap.sh ──► setup-distro.sh   (Arch/Ubuntu/Debian/Fedora/... no proot)
               └► setup-steam.sh    (X11 + Steam + box64; por distro)
-              └► setup-macos.sh    (docker-osx / só x86_64+KVM)
 ```

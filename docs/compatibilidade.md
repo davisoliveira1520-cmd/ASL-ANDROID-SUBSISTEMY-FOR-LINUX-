@@ -7,7 +7,6 @@
 | Arch/Ubuntu/Debian/Fedora/Alpine via proot | ✅ OK | ✅ OK |
 | Steam | 🧪 lento (box64, títulos leves) | ✅ OK |
 | Jogos triplo-A | ❌ não | 🧪 depende de GPU/KVM |
-| macOS (docker-osx) | ❌ sem KVM | ✅ se tiver /dev/kvm |
 
 ## Distros suportadas
 
@@ -33,7 +32,8 @@ da arquitetura correta automaticamente).
 ## Perguntas frequentes
 
 ### Preciso de root?
-Não para Linux/Steam (proot). Para `/dev/kvm` (macOS) **sim**, em geral.
+Não. O ASLM é **root-free por design** (igual ao WSL1): tudo roda em userspace
+via proot, no Termux.
 
 ### Por que não é preciso root (igual ao WSL1)?
 O WSL1 roda Linux no Windows **traduzindo chamadas de sistema** — sem VM e
@@ -63,8 +63,6 @@ Não. Nada é gravado na partição de boot, não há dual boot, não há risco 
   overhead maior. Em celulares topo de linha é ok para uso diário.
 - **Steam em ARM64**: box64 traduz instruções, o que consome CPU. Espere
   lentidão; jogue títulos leves. Não é garantia de funcionamento.
-- **macOS**: EULA da Apple proíbe executar em hardware não-Apple. Uso é de
-  sua responsabilidade. No ARM, não há KVM, então não roda.
 - **Rede**: algumas redes bloqueiam pares de dados do Steam; use VPN se preciso.
 - **Armazenamento**: Termux usa `~/`, então fique atento ao espaço
   (App Info → Armazenamento no Android).
@@ -78,7 +76,6 @@ Não. Nada é gravado na partição de boot, não há dual boot, não há risco 
 | Steam abre e some | Rode `bash scripts/setup-steam.sh start` e leia os logs |
 | Tela preta no termux-x11 | Atualize termos-x11-nightly e reinicie |
 | `box64 not found` | Rode `setup-steam.sh` de novo (ele instala box64 em ARM) |
-| macOS não inicia | Verifique `uname -m` e `ls /dev/kvm` |
 
 ## Abrindo issue
 
