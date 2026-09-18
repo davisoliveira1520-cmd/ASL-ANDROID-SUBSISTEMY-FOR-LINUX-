@@ -22,7 +22,7 @@
   <text x="40" y="164" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
         font-size="20" fill="#c9d1d9">Android Subsystem for Linux and Mac OS</text>
   <text x="40" y="200" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-        font-size="16" fill="#8b949e">Arch · Ubuntu · Debian · Fedora · Alpine  —  Linux on Android</text>
+        font-size="16" fill="#8b949e">Arch · Ubuntu · Debian · Fedora · Alpine  —  the WSL for Android</text>
 
   <g transform="translate(40,222)">
     <rect x="0" y="0" width="150" height="26" rx="13" fill="#1f6feb" opacity="0.18" stroke="#1f6feb"/>

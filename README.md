@@ -4,7 +4,7 @@
 
 # ASLM — Android Subsystem for Linux and Mac OS
 
-**Rode GNU/Linux e (experimental) macOS por cima do Android, sem dual boot.**
+**O WSL do Android** — rode GNU/Linux e (experimental) macOS por cima do Android, sem dual boot.
 
 🇧🇷 **Português** · 🇺🇸 [English](README.en.md)
 
@@ -22,7 +22,7 @@ Inclui um perfil de jogos inspirado no [Bazzite](https://github.com/ublue-os/baz
 
 ## ⚠️ Aviso honesto (leia antes)
 
-- **Android já é Linux.** O kernel do Android é um fork do Linux. O ASLM não substitui o kernel — ele adiciona distribuições GNU/Linux em cima do Android (a mesma ideia do WSL, mas ao contrário: userspace Linux sobre Android, não sobre Windows).
+- **Android já é Linux.** O kernel do Android é um fork do Linux. O ASLM **não substitui o kernel** — ele é o **WSL para Android**: assim como o WSL dá um subsistema Linux completo dentro do Windows, o ASLM dá um subsistema Linux completo dentro do Android (userspace GNU em cima do Android, não sobre Windows).
 - **macOS em Android é EXPERIMENTAL e só em x86_64 + KVM.** O [docker-osx](https://github.com/sickcodes/docker-osx) precisa de virtualização por hardware (KVM) e arquitetura x86_64. A maioria dos celulares é ARM64, então **macOS não funciona nessa maioria** — só em tablets/PCS Android x86_64, ou emuladores com KVM. O script `setup-macos.sh` detecta e avisa se seu aparelho não suporta.
 - **Steam em ARM64 é lento/experimental.** Jogos nativos não vão rodar bem. O ASLM prepara o ambiente (box64 + X11 + Vulkan-Lavapipe) e deixa você testar títulos leves.
 
@@ -54,6 +54,19 @@ Sem dual boot: **tudo roda dentro do Android**, no mesmo aparelho, coexistindo c
 | `bazzite` | Fedora + stack de jogos | `dnf` + RPM Fusion |
 
 > **`bazzite`** é um **perfil gamer** (Fedora + Steam/Lutris/GameMode/MangoHud), não o sistema imutável do Bazzite. O Bazzite real é uma imagem OCI/Fedora Atomic e não roda via `proot-distro`.
+
+### 🔄 WSL × ASLM
+
+| Recurso | WSL (Windows) | ASLM (Android) |
+|---|---|---|
+| Subsistema Linux | WSL2 usa uma VM com kernel real | `proot` (sem root); chroot/kexec nativo (experimental, com root) |
+| Instalar distro | `wsl --install -d Ubuntu` | `aslm --install -d ubuntu` |
+| Listar distros | `wsl --list` | `aslm --list` |
+| Rodar comando | `wsl -d Ubuntu <cmd>` | `aslm -d ubuntu <cmd>` |
+| Definir padrão | `wsl --set-default Ubuntu` | `aslm --set-default ubuntu` |
+| Backup/restauração | `wsl --export / --import` | `aslm --export / --import` |
+| Compartilhar arquivos | `wsl` vê `/mnt/c` | `aslm` vê via bind: `proot-distro login --bind /sdcard -- <distro>` |
+| Desativar tudo | `wsl --shutdown` | `aslm --shutdown` |
 
 ---
 
@@ -121,19 +134,25 @@ bash scripts/bootstrap.sh bazzite    # perfil gamer (Fedora + jogos)
 
 ---
 
-## 📚 Uso
+## 📚 Uso (CLI estilo WSL)
 
 ```sh
-# Gerenciar distros
-bash scripts/setup-distro.sh list            # lista distros suportadas
-bash scripts/setup-distro.sh install ubuntu  # instala Ubuntu
-bash scripts/setup-distro.sh install bazzite # perfil gamer (Fedora + jogos)
-bash scripts/setup-distro.sh shell ubuntu    # abre o shell
+# Entrar na distro padrão
+aslm
 
-# Atalho único (criado pelo bootstrap) — usa a distro padrão
-aslm                       # entra na distro padrão (Arch)
-aslm ubuntu                # entra no Ubuntu
-aslm -- neofetch           # roda um comando dentro da distro
+# Rodar um comando numa distro
+aslm -d ubuntu lsb_release -a
+
+# Gerenciar distros (igual ao wsl)
+aslm --list                    # lista instaladas
+aslm --install -d ubuntu       # instala Ubuntu
+aslm --install -d bazzite      # perfil gamer (Fedora + jogos)
+aslm --set-default ubuntu      # define a padrão
+aslm --unregister debian       # remove
+aslm --export ubuntu bk.tar    # backup
+aslm --import ubuntu bk.tar    # restaura
+aslm --shutdown                # encerra processos
+aslm --version
 
 # Camada de jogos estilo Bazzite
 bash scripts/setup-steam.sh setup archlinux
@@ -141,12 +160,16 @@ bash scripts/setup-steam.sh start archlinux
 
 # Runner do macOS (só x86_64 + KVM)
 bash scripts/setup-macos.sh run
+
+# [Experimental] Linux nativo no kernel do Android (kexec-hardboot)
+bash scripts/setup-kexec.sh check
 ```
 
 Veja os detalhes em:
 
-- [`docs/arquitetura.md`](docs/arquitetura.md) — como o ASLM funciona por baixo
+- [`docs/arquitetura.md`](docs/arquitetura.md) — como o ASLM funciona por baixo (cartografia WSL)
 - [`docs/compatibilidade.md`](docs/compatibilidade.md) — o que roda e o que não roda
+- [`docs/modo-kernel-nativo.md`](docs/modo-kernel-nativo.md) — Linux no kernel do Android (kexec, experimental)
 - [`scripts/`](scripts/) — scripts de instalação e configuração
 
 ---

@@ -31,6 +31,21 @@ No WSL, o Windows hospeda um Linux userspace. No ASLM é o inverso: o
 - O filesystem fica em `~/.local/share/proot-distro/installed-rootfs/`.
 - Cada distro é independente: você pode ter Arch + Ubuntu + Fedora lado a lado.
 
+### Mapa WSL ↔ ASLM
+
+| Conceito | WSL (Windows) | ASLM (Android) |
+|---|---|---|
+| CLI | `wsl` | `aslm` |
+| Instalar distro | `wsl --install -d Ubuntu` | `aslm --install -d ubuntu` |
+| Listar | `wsl --list` | `aslm --list` |
+| Executar comando | `wsl -d Ubuntu <cmd>` | `aslm -d ubuntu <cmd>` |
+| Backup/restauração | `wsl --export / --import` | `aslm --export / --import` |
+| Config global | `%UserProfile%\.wslconfig` | `~/.config/aslm/aslm.conf` |
+| Motor | WSL2: kernel real numa VM | `proot` (userspace); chroot/kexec nativo (experimental) |
+
+O comando `aslm` (em `scripts/aslm`) é instalado no PATH pelo `bootstrap.sh`
+e espelha esses subcomandos do WSL sobre o `proot-distro`.
+
 ## Camada de jogos (estilo Bazzite)
 
 A ideia vem do [Bazzite](https://github.com/ublue-os/bazzite): um sistema

@@ -29,23 +29,22 @@ ASLM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 say "ASLM: instalando distro '${DISTRO}'..."
 bash "${ASLM_DIR}/setup-distro.sh" install "${DISTRO}"
 
-# --- Atalho unico para o dia a dia -------------------------------------------
-setup_alias() {
-  local rc="${HOME}/.bashrc"
-  if [ -f "${rc}" ] && ! grep -q '^aslm()' "${rc}"; then
-    {
-      echo ''
-      echo 'aslm() { proot-distro login "${1:-'"${DISTRO}"'}" "${@:2}"; }'
-    } >> "${rc}"
-    say "Criada a funcao 'aslm' em ~/.bashrc (usa ${DISTRO} por padrao)."
-  else
-    say "Funcao 'aslm' ja presente (ou sem .bashrc)."
-  fi
+# --- Instala o comando 'aslm' (CLI estilo WSL) no PATH ----------------------
+install_aslm_cli() {
+  local dest="${PREFIX:-/data/data/com.termux/files/usr}/bin/aslm"
+  install -m755 "${ASLM_DIR}/aslm" "${dest}"
+  say "Comando 'aslm' instalado em ${dest}"
+  [ -f "${HOME}/.config/aslm/aslm.conf" ] || {
+    mkdir -p "${HOME}/.config/aslm"
+    printf 'ASLM_DISTRO="%s"\n' "${DISTRO}" > "${HOME}/.config/aslm/aslm.conf"
+    say "Config padrão criada: ${HOME}/.config/aslm/aslm.conf (distro=${DISTRO})"
+  }
 }
-setup_alias
+install_aslm_cli
 
 say "Tudo pronto!"
-say "  aslm                 # entra em ${DISTRO}"
-say "  aslm ubuntu          # entra no Ubuntu (se instalado)"
-say "  aslm -- pacman -S neofetch"
+say "  aslm                        # abre o shell de ${DISTRO} (estilo wsl)"
+say "  aslm --list                 # lista distros"
+say "  aslm --install -d ubuntu    # instala Ubuntu"
+say "  aslm -d ubuntu lsb_release   # roda comando no Ubuntu"
 say "  bash scripts/setup-steam.sh setup   # camada de jogos (estilo Bazzite)"
