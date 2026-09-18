@@ -59,7 +59,7 @@ Sem dual boot: **tudo roda dentro do Android**, no mesmo aparelho, coexistindo c
 
 | Recurso | WSL (Windows) | ASLM (Android) |
 |---|---|---|
-| Subsistema Linux | WSL2 usa uma VM com kernel real | `proot` (sem root); chroot/kexec nativo (experimental, com root) |
+| Subsistema Linux | WSL1 traduz syscalls (sem VM, sem root) | `proot` traduz syscalls (**sem root**) |
 | Instalar distro | `wsl --install -d Ubuntu` | `aslm --install -d ubuntu` |
 | Listar distros | `wsl --list` | `aslm --list` |
 | Rodar comando | `wsl -d Ubuntu <cmd>` | `aslm -d ubuntu <cmd>` |
@@ -160,16 +160,12 @@ bash scripts/setup-steam.sh start archlinux
 
 # Runner do macOS (só x86_64 + KVM)
 bash scripts/setup-macos.sh run
-
-# [Experimental] Linux nativo no kernel do Android (kexec-hardboot)
-bash scripts/setup-kexec.sh check
 ```
 
 Veja os detalhes em:
 
 - [`docs/arquitetura.md`](docs/arquitetura.md) — como o ASLM funciona por baixo (cartografia WSL)
 - [`docs/compatibilidade.md`](docs/compatibilidade.md) — o que roda e o que não roda
-- [`docs/modo-kernel-nativo.md`](docs/modo-kernel-nativo.md) — Linux no kernel do Android (kexec, experimental)
 - [`scripts/`](scripts/) — scripts de instalação e configuração
 
 ---

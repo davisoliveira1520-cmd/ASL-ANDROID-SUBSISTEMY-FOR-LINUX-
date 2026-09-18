@@ -41,7 +41,7 @@ No WSL, o Windows hospeda um Linux userspace. No ASLM é o inverso: o
 | Executar comando | `wsl -d Ubuntu <cmd>` | `aslm -d ubuntu <cmd>` |
 | Backup/restauração | `wsl --export / --import` | `aslm --export / --import` |
 | Config global | `%UserProfile%\.wslconfig` | `~/.config/aslm/aslm.conf` |
-| Motor | WSL2: kernel real numa VM | `proot` (userspace); chroot/kexec nativo (experimental) |
+| Motor | WSL1: tradução de syscalls (sem VM) | `proot`: tradução de syscalls (**sem root**) |
 
 O comando `aslm` (em `scripts/aslm`) é instalado no PATH pelo `bootstrap.sh`
 e espelha esses subcomandos do WSL sobre o `proot-distro`.

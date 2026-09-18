@@ -35,15 +35,13 @@ da arquitetura correta automaticamente).
 ### Preciso de root?
 Não para Linux/Steam (proot). Para `/dev/kvm` (macOS) **sim**, em geral.
 
-### Por que proot em vez de ativar o kernel direto (chroot/nativo)?
-O kernel do Android **já é o Linux** — o que falta é o userspace GNU, e o ASLM
-adiciona ele via **proot**: funciona em **qualquer Android de fábrica, sem root
-e sem desbloquear o boot**. Um chroot real rodaria em velocidade nativa, mas
-exige root (boot desbloqueado + SELinux permissivo) e continua **não sendo
-dual boot** — os dois coexistem. O ASLM prefere proot exatamente por não
-exigir modificação nenhuma no aparelho. Em aparelhos roteados, dá para usar o
-[LinuxDeploy](https://github.com/meefik/linuxdeploy) (chroot) lado a lado com
-o ASLM se quiser mais performance.
+### Por que não é preciso root (igual ao WSL1)?
+O WSL1 roda Linux no Windows **traduzindo chamadas de sistema** — sem VM e
+sem kernel próprio. O `proot` faz exatamente isso no Android: traduz as
+chamadas do userspace GNU para o kernel do Android, **sem root e sem
+desbloquear o boot**. Qualquer abordagem "nativa" (chroot com kernel direto)
+exige root e foge do espírito WSL do projeto. O ASLM é root-free por design;
+soluções de root (LinuxDeploy, etc.) existem fora do escopo do ASLM.
 
 ### Linux já não é o Android?
 O Android usa um kernel Linux, mas não traz um *userspace* GNU completo.
